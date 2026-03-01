@@ -1,345 +1,867 @@
 <!doctype html>
-<html lang="sk">
+<html lang="sk" data-theme="light">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Slovníky</title>
 <link rel="icon" type="image/png" sizes="1024x1024" href="icon-1024.png">
 <link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Google+Sans+Display:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg: #f3f6fb;
-    --ribbon-start: #2b579a;
-    --ribbon-end: #163e7a;
-    --panel: #ffffff;
-    --text: #0b1220;
-    --muted: #44556a;
-    --accent: #0b66c3;
-    --btn-bg: #eef4fb;
-    --btn-hover: #e1eefc;
-    --card-border: rgba(13,33,63,0.06);
-    --input-bg: rgba(255,255,255,1);
-    --input-border: rgba(0,0,0,0.06);
-    --radius: 12px;
-    --btn-height: 40px;
-    --font-size: 15px;
-    --touch-btn-height: 56px;
-    --max-app-width: 980px;
-    --gap: 14px;
-    --ribbon: linear-gradient(180deg,var(--ribbon-start),var(--ribbon-end));
-    --shadow: 0 8px 30px rgba(15,30,60,0.08);
-  }
+/* ═══════════════════════════════════════════════════
+   MATERIAL 3 EXPRESSIVE
+   Dynamic Color · Shape Expressiveness · Spring Motion
+   Source color: #1A73E8 (Google Blue tonal seed)
+═══════════════════════════════════════════════════ */
 
-  @media (prefers-color-scheme: dark) {
-    :root{
-      --bg: #071018;
-      --ribbon-start: #0b3a66;
-      --ribbon-end: #062536;
-      --panel: #0f1719;
-      --text: #e6eef6;
-      --muted: #9aa6b0;
-      --accent: #2aa1ff;
-      --btn-bg: rgba(255,255,255,0.03);
-      --btn-hover: rgba(255,255,255,0.06);
-      --card-border: rgba(255,255,255,0.06);
-      --input-bg: rgba(255,255,255,0.02);
-      --input-border: rgba(255,255,255,0.12);
-      --ribbon: linear-gradient(180deg,var(--ribbon-start),var(--ribbon-end));
-      --shadow: 0 10px 34px rgba(0,0,0,0.6);
-    }
-  }
+/* ── LIGHT SCHEME ── */
+:root {
+  --md-primary:            #1B5EA6;
+  --md-on-primary:         #FFFFFF;
+  --md-primary-container:  #D6E4FF;
+  --md-on-primary-cont:    #001B3E;
+  --md-secondary:          #535F70;
+  --md-on-secondary:       #FFFFFF;
+  --md-secondary-cont:     #D7E3F7;
+  --md-on-secondary-cont:  #101C2B;
+  --md-tertiary:           #6B5778;
+  --md-on-tertiary:        #FFFFFF;
+  --md-tertiary-cont:      #F2DAFF;
+  --md-on-tertiary-cont:   #251431;
+  --md-error:              #BA1A1A;
+  --md-on-error:           #FFFFFF;
+  --md-error-cont:         #FFDAD6;
 
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    -webkit-font-smoothing:antialiased;
-    padding:16px;
-    display:flex;
-    justify-content:center;
-  }
+  --md-surface:            #F8F9FF;
+  --md-surface-dim:        #D8DAE5;
+  --md-surface-bright:     #F8F9FF;
+  --md-surface-cont-low:   #F2F3FE;
+  --md-surface-cont:       #ECEDF8;
+  --md-surface-cont-high:  #E6E8F3;
+  --md-surface-cont-high2: #E1E2EE;
+  --md-on-surface:         #191C20;
+  --md-on-surface-var:     #42474E;
+  --md-outline:            #72787E;
+  --md-outline-var:        #C2C7CE;
 
-  .app{
-    width: min(var(--max-app-width),98%);
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.01));
-    border-radius:12px;
-    box-shadow: var(--shadow);
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
-  }
+  --md-inv-surface:        #2E3036;
+  --md-inv-on-surface:     #EFF0FB;
+  --md-inv-primary:        #AAC7FF;
 
-  .ribbon{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:12px;
-    background: var(--ribbon);
-    color: white;
-  }
-  .title { font-weight:700; font-size:16px; }
+  --md-scrim:              rgba(0,0,0,0.32);
 
-  /* hlavné rozloženie: dve kolóny, rovnake výšky */
-  .main{
-    display:flex;
-    gap:var(--gap);
-    padding:18px;
-    align-items:stretch; /* zabezpečí rovnakú výšku stĺpcov */
-    align-content:stretch;
-  }
-  .left{ flex:1; min-width:0; display:flex; flex-direction:column; }
-  .panel{
-    background:var(--panel);
-    border-radius:12px;
-    padding:14px;
-    border:1px solid var(--card-border);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.03);
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    flex:1 1 auto; /* natiahne sa na plnú výšku rodiča */
-  }
+  /* Elevation tints (surface + primary at opacity) */
+  --elev-1: rgba(27,94,166,0.05);
+  --elev-2: rgba(27,94,166,0.08);
+  --elev-3: rgba(27,94,166,0.11);
 
-  .search-row{
-    display:flex;
-    gap:12px;
-    align-items:center;
-  }
+  /* Shape tokens — M3 Expressive uses much larger radii */
+  --shape-none:       0px;
+  --shape-xs:         4px;
+  --shape-sm:         8px;
+  --shape-md:         12px;
+  --shape-lg:         16px;
+  --shape-xl:         28px;
+  --shape-2xl:        36px;
+  --shape-full:       999px;
 
-  .input{
-    flex:1;
-    height:44px;
-    padding:10px 12px;
-    font-size:var(--font-size);
-    border-radius:10px;
-    border:1px solid var(--input-border);
-    background:var(--input-bg);
-    color:var(--text);
-    min-width:0;
-  }
-  .input::placeholder{ color:var(--muted); opacity:.9; }
+  /* Motion */
+  --motion-std:       cubic-bezier(0.2, 0, 0, 1);
+  --motion-decel:     cubic-bezier(0, 0, 0, 1);
+  --motion-accel:     cubic-bezier(0.3, 0, 1, 1);
+  --motion-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-short:        200ms;
+  --dur-med:          300ms;
+  --dur-long:         500ms;
+}
 
-  .btn {
-    height:var(--btn-height);
-    padding:8px 14px;
-    border-radius:10px;
-    border:1px solid var(--card-border);
-    background:var(--btn-bg);
-    cursor:pointer;
-    font-size:15px;
-    white-space:nowrap;
-    color:var(--text);
-    box-sizing:border-box;
-  }
-  .btn.primary{
-    background:linear-gradient(180deg,var(--accent), color-mix(in srgb, var(--accent) 80%, black 20%));
-    color:white;
-    border-color: transparent;
-    box-shadow: 0 4px 14px rgba(11,102,195,0.12);
-  }
-  .btn.ghost{
-    background:transparent;
-    border:1px solid var(--card-border);
-  }
-  .btn:hover{ filter:brightness(.98); }
-  .btn:active{ transform:translateY(1px); }
+/* ── DARK SCHEME ── */
+[data-theme="dark"] {
+  --md-primary:            #AAC7FF;
+  --md-on-primary:         #0F305E;
+  --md-primary-container:  #284777;
+  --md-on-primary-cont:    #D6E4FF;
+  --md-secondary:          #BBC7DB;
+  --md-on-secondary:       #253140;
+  --md-secondary-cont:     #3B4858;
+  --md-on-secondary-cont:  #D7E3F7;
+  --md-tertiary:           #D8BDE6;
+  --md-on-tertiary:        #3B2948;
+  --md-tertiary-cont:      #523F5F;
+  --md-on-tertiary-cont:   #F2DAFF;
+  --md-error:              #FFB4AB;
+  --md-on-error:           #690005;
+  --md-error-cont:         #93000A;
 
-  .right{
-    width:300px;
-    min-width:220px;
-    display:flex;
-    flex-direction:column;
-  }
-  .card{
-    background:var(--panel);
-    padding:12px;
-    border-radius:10px;
-    border:1px solid var(--card-border);
-    margin-bottom:12px;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.03);
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    flex:1 1 auto; /* natiahne sa na plnú výšku rodiča */
-  }
-  .card h3{ margin:0 0 8px 0; font-size:14px; color:var(--muted); }
+  --md-surface:            #111318;
+  --md-surface-dim:        #111318;
+  --md-surface-bright:     #37393F;
+  --md-surface-cont-low:   #191C20;
+  --md-surface-cont:       #1D2026;
+  --md-surface-cont-high:  #282A30;
+  --md-surface-cont-high2: #32353B;
+  --md-on-surface:         #E2E2E9;
+  --md-on-surface-var:     #C2C7CE;
+  --md-outline:            #8C9199;
+  --md-outline-var:        #42474E;
 
-  /* zabezpečí, že skupina tlačidiel zaberie dostupnú výšku a tlačidlá sú rovnakej veľkosti */
-  .search-row > div,
-  .card > div {
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    align-items:stretch;
-    justify-content:flex-start;
-  }
+  --md-inv-surface:        #E2E2E9;
+  --md-inv-on-surface:     #2E3036;
+  --md-inv-primary:        #1B5EA6;
 
-  /* tlačidlá v rýchlych odkazoch a vo vnútri card majú plnú šírku */
-  .card .btn,
-  .right .btn,
-  .search-row > div .btn {
-    width:100%;
-  }
+  --elev-1: rgba(170,199,255,0.05);
+  --elev-2: rgba(170,199,255,0.08);
+  --elev-3: rgba(170,199,255,0.11);
+}
 
-  @media (max-width:860px){
-    .main{ flex-direction:column; padding:12px; gap:12px; align-items:stretch; }
-    .right{ width:100%; }
-  }
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  @media (max-width:600px){
-    .search-row{
-      flex-direction:column;
-      align-items:stretch;
-    }
-    .input{
-      height:52px;
-      font-size:16px;
-      padding:12px;
-    }
-    .btn{
-      height: var(--touch-btn-height);
-      font-size:16px;
-    }
-    .btn-row{ display:flex; gap:8px; flex-direction:column; }
-  }
+body {
+  font-family: 'Google Sans Text', 'Google Sans', 'Roboto', system-ui, sans-serif;
+  background: var(--md-surface);
+  color: var(--md-on-surface);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 0 80px;
+  -webkit-font-smoothing: antialiased;
+  transition: background var(--dur-med) var(--motion-std),
+              color var(--dur-med) var(--motion-std);
+}
 
-  @media (max-width:420px){
-    .ribbon{ padding:10px; }
-    .title{ font-size:15px; }
-    .btn{ font-size:15px; padding:10px; }
-  }
+/* ── APP WRAP ── */
+.app {
+  width: 100%; max-width: 640px;
+  display: flex; flex-direction: column;
+  animation: app-in var(--dur-long) var(--motion-decel) both;
+}
+@keyframes app-in {
+  from { opacity:0; transform: translateY(24px); }
+  to   { opacity:1; transform: translateY(0); }
+}
 
-  /* prístupnosť focus */
-  :focus{ outline:3px solid rgba(11,102,195,0.18); outline-offset:3px; border-radius:8px; }
+/* ══════════════════════════════
+   HERO HEADER — large, expressive
+══════════════════════════════ */
+.hero {
+  background: var(--md-primary-container);
+  color: var(--md-on-primary-cont);
+  padding: 40px 28px 32px;
+  position: relative;
+  overflow: hidden;
+  /* bottom shape — large bottom-corner rounding */
+  border-radius: 0 0 var(--shape-2xl) var(--shape-2xl);
+}
 
-  .footer{ padding:10px 18px; font-size:13px; color:var(--muted); text-align:right; }
-  .note { color:var(--muted); font-size:13px; margin-top:10px; }
+/* decorative blob shapes behind header */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -50px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: var(--md-primary);
+  opacity: 0.14;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: -20px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: var(--md-tertiary-cont);
+  opacity: 0.50;
+}
+
+.hero-top {
+  display: flex; align-items: center; justify-content: space-between;
+  position: relative; z-index: 1;
+  margin-bottom: 24px;
+}
+
+.hero-wordmark {
+  font-family: 'Google Sans Display', 'Google Sans', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+.hero-wordmark span { color: var(--md-primary); }
+
+.hero-sub {
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.72;
+  margin-top: 4px;
+  letter-spacing: 0.02em;
+}
+
+/* icon button — M3 style */
+.icon-btn {
+  width: 48px; height: 48px;
+  border-radius: var(--shape-full);
+  border: none;
+  background: var(--elev-2);
+  color: var(--md-on-primary-cont);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  transition: background var(--dur-short) var(--motion-std),
+              transform var(--dur-short) var(--motion-spring);
+  position: relative; z-index: 1;
+}
+.icon-btn:hover { background: var(--elev-3); }
+.icon-btn:active { transform: scale(0.94); }
+
+/* state layer ripple */
+.icon-btn::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  background: var(--md-on-primary-cont);
+  opacity: 0;
+  transition: opacity var(--dur-short);
+}
+.icon-btn:hover::after { opacity: 0.08; }
+.icon-btn:active::after { opacity: 0.12; }
+
+/* ══════════════════════════════
+   SEARCH BAR — M3 Search
+   (large, pill-shaped, prominent)
+══════════════════════════════ */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--md-surface-cont-high2);
+  border-radius: var(--shape-full);
+  padding: 0 16px 0 20px;
+  height: 56px;
+  position: relative; z-index: 1;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+  transition: background var(--dur-short) var(--motion-std),
+              box-shadow var(--dur-short) var(--motion-std);
+}
+.search-bar:focus-within {
+  background: var(--md-surface-cont-high);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.10);
+}
+.search-icon { color: var(--md-on-surface-var); flex-shrink: 0; }
+.search-input {
+  flex: 1; min-width: 0;
+  font-family: 'Google Sans Text', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--md-on-surface);
+  background: transparent;
+  border: none;
+  outline: none;
+  caret-color: var(--md-primary);
+}
+.search-input::placeholder { color: var(--md-on-surface-var); }
+
+/* search trailing icon button */
+.search-trail {
+  width: 40px; height: 40px;
+  border-radius: var(--shape-full);
+  border: none;
+  background: var(--md-primary);
+  color: var(--md-on-primary);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background var(--dur-short) var(--motion-std),
+              transform var(--dur-short) var(--motion-spring);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.search-trail:hover { filter: brightness(1.08); }
+.search-trail:active { transform: scale(0.92); filter: brightness(0.95); }
+
+/* ══════════════════════════════
+   BODY CONTENT
+══════════════════════════════ */
+.body {
+  padding: 24px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Section label ── */
+.sec-label {
+  font-family: 'Google Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--md-on-surface-var);
+  margin-bottom: 10px;
+}
+
+/* ══════════════════════════════
+   DICT CHIPS — M3 Filter Chips
+══════════════════════════════ */
+.chips-row {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.fchip {
+  height: 32px;
+  padding: 0 16px;
+  border-radius: var(--shape-sm);
+  border: 1px solid var(--md-outline-var);
+  background: transparent;
+  color: var(--md-on-surface-var);
+  font-family: 'Google Sans Text', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 6px;
+  transition: background var(--dur-short) var(--motion-std),
+              border-color var(--dur-short) var(--motion-std),
+              color var(--dur-short) var(--motion-std),
+              transform var(--dur-short) var(--motion-spring);
+  white-space: nowrap;
+  position: relative; overflow: hidden;
+}
+.fchip::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--md-on-surface);
+  opacity: 0;
+  transition: opacity var(--dur-short);
+  border-radius: inherit;
+}
+.fchip:hover::before { opacity: 0.08; }
+.fchip:active::before { opacity: 0.12; }
+.fchip:active { transform: scale(0.97); }
+
+.fchip.on {
+  background: var(--md-secondary-cont);
+  border-color: transparent;
+  color: var(--md-on-secondary-cont);
+}
+.fchip.on::before { background: var(--md-on-secondary-cont); }
+.fchip.on .check { display: flex; }
+.check {
+  display: none;
+  align-items: center;
+  animation: check-pop var(--dur-short) var(--motion-spring);
+}
+@keyframes check-pop {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* ══════════════════════════════
+   ACTION BUTTONS — M3 Tonal + Outlined
+══════════════════════════════ */
+.actions-row {
+  display: flex; gap: 10px; flex-wrap: wrap;
+}
+
+/* Tonal button */
+.btn-tonal {
+  height: 40px;
+  padding: 0 24px;
+  border-radius: var(--shape-full);
+  border: none;
+  background: var(--md-secondary-cont);
+  color: var(--md-on-secondary-cont);
+  font-family: 'Google Sans Text', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 8px;
+  letter-spacing: 0.01em;
+  position: relative; overflow: hidden;
+  transition: box-shadow var(--dur-short) var(--motion-std),
+              transform var(--dur-short) var(--motion-spring);
+}
+.btn-tonal::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--md-on-secondary-cont);
+  opacity: 0; transition: opacity var(--dur-short);
+}
+.btn-tonal:hover { box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+.btn-tonal:hover::before { opacity: 0.08; }
+.btn-tonal:active { transform: scale(0.97); }
+.btn-tonal:active::before { opacity: 0.12; }
+
+/* Outlined button */
+.btn-out {
+  height: 40px;
+  padding: 0 20px;
+  border-radius: var(--shape-full);
+  border: 1px solid var(--md-outline-var);
+  background: transparent;
+  color: var(--md-primary);
+  font-family: 'Google Sans Text', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 8px;
+  letter-spacing: 0.01em;
+  position: relative; overflow: hidden;
+  transition: border-color var(--dur-short), transform var(--dur-short) var(--motion-spring);
+}
+.btn-out::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--md-primary);
+  opacity: 0; transition: opacity var(--dur-short);
+}
+.btn-out:hover::before { opacity: 0.08; }
+.btn-out:active { transform: scale(0.97); }
+.btn-out:active::before { opacity: 0.12; }
+
+/* ══════════════════════════════
+   CARDS — M3 Cards
+══════════════════════════════ */
+
+/* Filled card */
+.card-filled {
+  background: var(--md-surface-cont);
+  border-radius: var(--shape-xl);
+  padding: 20px;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: background var(--dur-med) var(--motion-std);
+}
+
+/* Outlined card */
+.card-outlined {
+  border: 1px solid var(--md-outline-var);
+  border-radius: var(--shape-xl);
+  overflow: hidden;
+}
+
+/* ── History ── */
+.hist-bar {
+  background: var(--md-surface-cont-low);
+  border-radius: var(--shape-lg);
+  padding: 12px 16px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.hist-lbl {
+  font-size: 12px; font-weight: 500;
+  color: var(--md-on-surface-var); flex-shrink: 0;
+}
+.hist-chips { display: flex; flex-wrap: wrap; gap: 6px; flex: 1; }
+.hchip {
+  padding: 4px 12px;
+  border-radius: var(--shape-full);
+  border: none;
+  background: var(--md-surface-cont-high);
+  color: var(--md-on-surface);
+  font-family: 'Google Sans Text', sans-serif;
+  font-size: 12px; font-weight: 400;
+  cursor: pointer;
+  transition: background var(--dur-short);
+  position: relative; overflow: hidden;
+}
+.hchip::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--md-on-surface);
+  opacity: 0; transition: opacity var(--dur-short);
+  border-radius: inherit;
+}
+.hchip:hover::before { opacity: 0.08; }
+.hchip:active::before { opacity: 0.12; }
+
+.btn-text {
+  font-size: 12px; font-weight: 500;
+  color: var(--md-primary);
+  background: none; border: none;
+  cursor: pointer; font-family: 'Google Sans Text', sans-serif;
+  padding: 4px 8px;
+  border-radius: var(--shape-sm);
+  transition: background var(--dur-short);
+  position: relative; overflow: hidden;
+  letter-spacing: 0.01em;
+}
+.btn-text::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--md-primary);
+  opacity: 0; transition: opacity var(--dur-short);
+}
+.btn-text:hover::before { opacity: 0.08; }
+.btn-text:active::before { opacity: 0.12; }
+
+/* ── Hint row ── */
+.hint-row {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-size: 11.5px; color: var(--md-on-surface-var);
+  padding: 0 4px;
+}
+kbd {
+  display: inline-flex; align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--shape-xs);
+  background: var(--md-surface-cont-high);
+  border: 1px solid var(--md-outline-var);
+  font-family: 'Google Sans Text', sans-serif;
+  font-size: 11px; font-weight: 500;
+  color: var(--md-on-surface-var);
+}
+.dot { opacity: .4; }
+
+/* ══════════════════════════════
+   QUICK LINKS — M3 List
+══════════════════════════════ */
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  text-decoration: none;
+  color: var(--md-on-surface);
+  border-bottom: 1px solid var(--md-outline-var);
+  position: relative; overflow: hidden;
+  transition: background var(--dur-short);
+}
+.list-item:last-child { border-bottom: none; }
+.list-item::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--md-on-surface);
+  opacity: 0; transition: opacity var(--dur-short);
+}
+.list-item:hover::before { opacity: 0.08; }
+.list-item:active::before { opacity: 0.12; }
+.list-item:active { transform: scale(0.99); }
+
+/* M3 Icon container — circular, colored */
+.li-icon {
+  width: 40px; height: 40px; flex-shrink: 0;
+  border-radius: var(--shape-full);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.li-icon.c1 { background: var(--md-primary-container); }
+.li-icon.c2 { background: var(--md-secondary-cont); }
+.li-icon.c3 { background: var(--md-tertiary-cont); }
+.li-icon.c4 { background: var(--md-error-cont); }
+
+.li-body { flex: 1; min-width: 0; }
+.li-head {
+  font-family: 'Google Sans', sans-serif;
+  font-size: 14px; font-weight: 500;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.li-sub {
+  font-size: 12px; color: var(--md-on-surface-var);
+  margin-top: 1px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* trailing icon */
+.li-trail {
+  color: var(--md-on-surface-var); flex-shrink: 0;
+}
+
+/* ══════════════════════════════
+   SPEAKING STATE
+══════════════════════════════ */
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(27,94,166,0.3); }
+  50%      { box-shadow: 0 0 0 10px rgba(27,94,166,0); }
+}
+.speaking {
+  background: var(--md-primary-container) !important;
+  color: var(--md-on-primary-cont) !important;
+  animation: pulse 1.2s ease infinite;
+}
+
+/* ── SHAKE ── */
+@keyframes shake {
+  0%,100%{ transform:translateX(0) }
+  20%,60%{ transform:translateX(-6px) }
+  40%,80%{ transform:translateX(6px) }
+}
+.shake { animation: shake .3s ease; }
+
+/* ── MOBILE ── */
+@media(max-width:600px) {
+  .hint-row { display: none !important; }
+}
+@media(max-width:480px) {
+  .hero { padding: 32px 20px 28px; }
+  .hero-wordmark { font-size: 28px; }
+  .card-outlined { border-radius: var(--shape-lg); }
+  .actions-row .btn-tonal { padding: 0 16px; }
+  .actions-row .btn-out { padding: 0 14px; }
+}
+
+/* focus visible */
+:focus-visible {
+  outline: 3px solid var(--md-primary);
+  outline-offset: 2px;
+  border-radius: var(--shape-xs);
+}
 </style>
 </head>
 <body>
-  <div class="app" role="application" aria-label="Slovníky">
-    <div class="ribbon" role="banner">
-      <div class="title">Slovníky</div>
-    </div>
+<div class="app">
 
-    <div class="main">
-      <div class="left">
-        <div class="panel" role="region" aria-label="Hlavné vyhľadávanie">
-          <div style="margin-bottom:8px; color:var(--muted); font-size:13px;">Zadajte slovo alebo frázu</div>
-
-          <div class="search-row" role="group" aria-label="Vyhľadávanie">
-            <input id="query" class="input" type="text" placeholder="napr. dom" aria-label="Hľadaný výraz" autocomplete="off" />
-            <div>
-              <button id="sjBtn" class="btn primary" title="Otvoriť slovník">🔎 Vyhľadať v slovníku SJ</button>
-              <button id="gtBtn" class="btn" title="Otvoriť Google Preklad">🔤 Preložiť cez Google prekladač</button>
-              <button id="readBtn" class="btn ghost" title="Prečítať text nahlas">🔊 Prečítať</button>
-            </div>
-          </div>
-        </div>
+  <!-- ══ HERO ══ -->
+  <div class="hero">
+    <div class="hero-top">
+      <div>
+        <div class="hero-wordmark">Slovníky</span></div>
       </div>
 
-      <aside class="right" aria-label="Rýchle odkazy">
-        <div class="card">
-          <h3>Rýchle odkazy</h3>
-          <div>
-<a href="https://slovnik.juls.savba.sk/" target="_top" class="btn">Slovenské slovníky</a>
-<a href="https://translate.google.com/?sl=auto&tl=sk&op=translate" target="_top" class="btn">Google Prekladač</a>
-<a href="https://slovniky.lingea.sk/" target="_top" class="btn">Lingea slovníky</a>
-          </div>
-        </div>
-      </aside>
+    </div>
+
+    <!-- M3 Search bar -->
+    <div class="search-bar">
+      <span class="search-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </span>
+      <input id="q" class="search-input" type="text"
+             placeholder="Hľadajte slovo alebo frázu…"
+             autocomplete="off" autocorrect="off" spellcheck="false"
+             aria-label="Hľadaný výraz"/>
+      <button id="goBtn" class="search-trail" aria-label="Vyhľadať">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
   </div>
+
+  <!-- ══ BODY ══ -->
+  <div class="body">
+
+    <!-- Filter chips: dict selector -->
+    <div>
+      <div class="sec-label">Slovník</div>
+      <div class="chips-row" role="group" aria-label="Výber slovníka">
+        <button class="fchip on" data-dict="sj">
+          <span class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          📖 Slovenské slovníky
+        </button>
+        <button class="fchip" data-dict="lingea">
+          <span class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          🌍 Lingea slovníky
+        </button>
+        <button class="fchip" data-dict="gt">
+          <span class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          🔤 Google prekladač
+        </button>
+        <button class="fchip" data-dict="wiki">
+          <span class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          📚 Wikipedia
+        </button>
+      </div>
+    </div>
+
+    <!-- Tonal + Outlined action buttons -->
+    <div>
+      <div class="sec-label">Akcie</div>
+      <div class="actions-row">
+        <button id="speakBtn" class="btn-tonal">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          Prečítať
+        </button>
+        <button id="copyBtn" class="btn-out">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Kopírovať
+        </button>
+        <button id="clearBtn" class="btn-out">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          Vymazať
+        </button>
+      </div>
+    </div>
+
+    <!-- History -->
+    <div id="histRow" class="hist-bar" style="display:none">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--md-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span class="hist-lbl">Nedávne</span>
+      <div id="chips" class="hist-chips"></div>
+      <button id="histClr" class="btn-text">Vymazať</button>
+    </div>
+
+    <!-- Hint -->
+    <div class="hint-row" id="hintRow">
+      <kbd>Enter</kbd> Hľadať
+      <span class="dot">·</span>
+      <kbd>Esc</kbd> Vymazať
+      <span class="dot">·</span>
+      <kbd>Alt+G</kbd> Preložiť
+      <span class="dot">·</span>
+      <kbd>Alt+R</kbd> Prečítať
+    </div>
+
+    <!-- Quick links — M3 List inside outlined card -->
+    <div>
+      <div class="sec-label">Rýchle odkazy</div>
+      <div class="card-outlined">
+        <a class="list-item" href="https://slovnik.juls.savba.sk/" target="_top">
+          <div class="li-icon c1">📖</div>
+          <div class="li-body">
+            <div class="li-head">Sloevenské Slovníky</div>
+            <div class="li-sub">Slovenský jazykový ústav SAV</div>
+          </div>
+          <span class="li-trail">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </span>
+        </a>
+        <a class="list-item" href="https://slovniky.lingea.sk/" target="_top">
+          <div class="li-icon c2">🌍</div>
+          <div class="li-body">
+            <div class="li-head">Lingea Slovníky</div>
+            <div class="li-sub">Prekladové slovníky</div>
+          </div>
+          <span class="li-trail">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </span>
+        </a>
+        <a class="list-item" href="https://translate.google.com/?sl=auto&tl=sk&op=translate" target="_top">
+          <div class="li-icon c3">🔤</div>
+          <div class="li-body">
+            <div class="li-head">Google Prekladač</div>
+            <div class="li-sub">Google prekladač</div>
+          </div>
+          <span class="li-trail">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </span>
+        </a>
+        <a class="list-item" href="https://sk.wikipedia.org/" target="_top">
+          <div class="li-icon c4">📚</div>
+          <div class="li-body">
+            <div class="li-head">Wikipedia SK</div>
+            <div class="li-sub">Encyklopédia</div>
+          </div>
+          <span class="li-trail">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /body -->
+</div><!-- /app -->
 
 <script>
 (() => {
-  const queryEl   = document.getElementById('query');
-  const sjBtn     = document.getElementById('sjBtn');
-  const gtBtn     = document.getElementById('gtBtn');
-  const readBtn   = document.getElementById('readBtn');
-  const openSJAll = document.getElementById('openSJAll');
-  const openGTAuto= document.getElementById('openGTAuto');
-  const openLingea= document.getElementById('openLingea');
+  const inp      = document.getElementById('q');
+  const goBtn    = document.getElementById('goBtn');
+  const speakBtn = document.getElementById('speakBtn');
+  const copyBtn  = document.getElementById('copyBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const histRow  = document.getElementById('histRow');
+  const chipsEl  = document.getElementById('chips');
+  const histClr  = document.getElementById('histClr');
+  const fchips   = document.querySelectorAll('.fchip');
+  const html     = document.documentElement;
 
-  // URL buildery
-  function sjUrl(q){ return 'https://slovnik.juls.savba.sk/?w=' + encodeURIComponent(q); }
-  function sjHome(){ return 'https://slovnik.juls.savba.sk/'; }
-  function gtUrl(q){ return 'https://translate.google.com/?sl=auto&tl=sk&op=translate&text=' + encodeURIComponent(q); }
-  function gtHome(){ return 'https://translate.google.com/?sl=auto&tl=sk&op=translate'; }
+  let activeDict = 'sj';
 
-  // Navigácia vždy v top-level karte
-  function navigateTop(url){
-    if (window.top === window.self) {
-      window.location.href = url;
-    } else {
-      try { window.top.location.href = url; }
-      catch(e){ window.open(url, '_top'); }
+  // ── Theme — follows system automatically ──
+  const applyTheme = (dark) => { html.dataset.theme = dark ? 'dark' : 'light'; };
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  applyTheme(mq.matches);
+  mq.addEventListener('change', e => applyTheme(e.matches));
+
+  // ── URLs ──
+  const urls = {
+    sj:     w => 'https://slovnik.juls.savba.sk/?w=' + encodeURIComponent(w),
+    lingea: w => 'https://slovniky.lingea.sk/anglicko-slovensky/' + encodeURIComponent(w),
+    gt:     w => 'https://translate.google.com/?sl=auto&tl=sk&op=translate&text=' + encodeURIComponent(w),
+    wiki:   w => 'https://sk.wikipedia.org/w/index.php?search=' + encodeURIComponent(w),
+  };
+
+  function nav(url) {
+    try { window.top.location.href = url; } catch { window.open(url, '_top'); }
+  }
+  function val() { return inp.value.trim(); }
+
+  // ── Filter chips ──
+  fchips.forEach(c => c.addEventListener('click', () => {
+    fchips.forEach(x => x.classList.remove('on'));
+    c.classList.add('on');
+    activeDict = c.dataset.dict;
+    inp.focus();
+  }));
+
+  // ── Search ──
+  function search(dict) {
+    const v = val();
+    if (!v) {
+      inp.classList.remove('shake');
+      void inp.offsetWidth;
+      inp.classList.add('shake');
+      inp.addEventListener('animationend', () => inp.classList.remove('shake'), { once: true });
+      inp.focus(); return;
     }
+    histSave(v);
+    nav(urls[dict || activeDict](v));
   }
 
-  // Kontrola prázdneho poľa
-  function getQueryOrWarn(){
-    const q = (queryEl.value || '').trim();
-    if (!q) {
-      alert('Zadajte slovo alebo frázu.');
-      queryEl.focus();
-      return null;
+  goBtn.addEventListener('click', () => search());
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); search(); }
+    if (e.key === 'Escape') { inp.value = ''; inp.focus(); }
+  });
+
+  // ── Speak ──
+  speakBtn.addEventListener('click', () => {
+    const t = val(); if (!t) { inp.focus(); return; }
+    if (!('speechSynthesis' in window)) { alert('Čítanie nie je dostupné.'); return; }
+    const u = new SpeechSynthesisUtterance(t);
+    u.lang = 'sk-SK'; u.rate = 0.92;
+    speechSynthesis.cancel(); speechSynthesis.speak(u);
+    speakBtn.classList.add('speaking');
+    u.onend = u.onerror = () => speakBtn.classList.remove('speaking');
+  });
+
+  // ── Copy ──
+  copyBtn.addEventListener('click', async () => {
+    const t = val(); if (!t) { inp.focus(); return; }
+    try {
+      await navigator.clipboard.writeText(t);
+      const old = copyBtn.innerHTML;
+      copyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Skopírované`;
+      setTimeout(() => { copyBtn.innerHTML = old; }, 1800);
+    } catch { alert('Kopírovanie zlyhalo.'); }
+  });
+
+  // ── Clear ──
+  clearBtn.addEventListener('click', () => { inp.value = ''; inp.focus(); });
+
+  // ── Shortcuts ──
+  document.addEventListener('keydown', e => {
+    if (e.altKey && (e.key === 'g' || e.key === 'G')) {
+      e.preventDefault();
+      fchips.forEach(x => x.classList.remove('on'));
+      document.querySelector('[data-dict="gt"]').classList.add('on');
+      activeDict = 'gt'; search('gt');
     }
-    return q;
+    if (e.altKey && (e.key === 'r' || e.key === 'R')) { e.preventDefault(); speakBtn.click(); }
+  });
+
+  // ── History ──
+  const HK = 'slov_m3_hist', MAX = 10;
+  function histLoad() { try { return JSON.parse(localStorage.getItem(HK) || '[]'); } catch { return []; } }
+  function histSave(w) {
+    let h = histLoad().filter(x => x !== w);
+    h.unshift(w); if (h.length > MAX) h.length = MAX;
+    try { localStorage.setItem(HK, JSON.stringify(h)); } catch {}
+    histRender();
   }
-
-  // --- Hlavné tlačidlá (blokujú prázdne pole) ---
-  sjBtn.addEventListener('click', () => {
-    const q = getQueryOrWarn();
-    if (q !== null) navigateTop(sjUrl(q));
-  });
-
-  gtBtn.addEventListener('click', () => {
-    const q = getQueryOrWarn();
-    if (q !== null) navigateTop(gtUrl(q));
-  });
-
-  // Enter v inpute = SJ vyhľadávanie
-  queryEl.addEventListener('keydown', (ev) => {
-    if (ev.key === 'Enter') {
-      ev.preventDefault();
-      const q = getQueryOrWarn();
-      if (q !== null) navigateTop(sjUrl(q));
-    }
-  });
-
-  // --- Rýchle odkazy (fungujú vždy) ---
-  openSJAll?.addEventListener('click', (ev) => {
-    ev.preventDefault();
-    const q = (queryEl.value || '').trim();
-    navigateTop(q ? sjUrl(q) : sjHome());
-  });
-
-  openGTAuto?.addEventListener('click', (ev) => {
-    ev.preventDefault();
-    const q = (queryEl.value || '').trim();
-    navigateTop(q ? gtUrl(q) : gtHome());
-  });
-
-  openLingea?.addEventListener('click', (ev) => {
-    ev.preventDefault();
-    navigateTop('https://slovniky.lingea.sk/');
-  });
-
-  // --- Čítanie nahlas ---
-  readBtn.addEventListener('click', () => {
-    const text = (queryEl.value || '').trim();
-    if(!text){ alert('Zadajte text na prečítanie.'); queryEl.focus(); return; }
-    if('speechSynthesis' in window){
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'sk-SK'; u.rate = 0.95;
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(u);
-    } else {
-      alert('Čítanie textu nahlas nie je dostupné.');
-    }
-  });
+  function histRender() {
+    const h = histLoad();
+    if (!h.length) { histRow.style.display = 'none'; return; }
+    histRow.style.display = 'flex';
+    chipsEl.innerHTML = '';
+    h.forEach(w => {
+      const c = document.createElement('button');
+      c.className = 'hchip'; c.textContent = w;
+      c.addEventListener('click', () => { inp.value = w; search(); });
+      chipsEl.appendChild(c);
+    });
+  }
+  histClr.addEventListener('click', () => { try { localStorage.removeItem(HK); } catch {} histRender(); });
+  histRender();
+  inp.focus();
 })();
 </script>
 </body>
